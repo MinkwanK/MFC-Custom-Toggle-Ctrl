@@ -7,7 +7,7 @@
 ## Features
 - You can hide or show content as you wish.
 - Supports scrolling.
-- upports a toggle menu (you can enable or disable it by clicking the toggle icon at the top).
+- Supports a toggle menu (you can enable or disable it by clicking the toggle icon at the top).
 
 ## How to Use
 - Include the following classes in your project: TogglePanel, ToggleBoard, ToggleItem
