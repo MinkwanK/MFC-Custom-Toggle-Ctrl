@@ -52,13 +52,13 @@ BOOL CToggleBoard::Init(CWnd* pParent)
 	return TRUE;
 }
 
-void CToggleBoard::AddToggleTitle(CString sTitle, int iToggleHeight, int iChildHeight, CFont* pFont, CWnd* pChildDlg, UINT uiToggleUp, UINT uiToggleUpClick, UINT uiToggleDown, UINT uiToggleDownClick)	//폰트 통일(추가)
+void CToggleBoard::AddToggleTitle(CString sTitle, int iToggleHeight, int iChildHeight, CFont* pFont, CWnd* pChildDlg)	//폰트 통일(추가)
 {
 	CToggleItem* pTitle = new CToggleItem;
 	if (!pTitle) return;
 
 	const int iCount = m_apToggleItem.GetCount();
-	pTitle->Init(sTitle, pFont, pChildDlg, this, uiToggleUp, uiToggleUpClick, uiToggleDown, uiToggleDownClick);
+	pTitle->Init(sTitle, pFont, pChildDlg, this);
 	pTitle->SetNo(iCount);
 	pTitle->SetToggleHeight(iToggleHeight);
 	pTitle->SetChildHeight(iChildHeight);
@@ -73,14 +73,16 @@ void CToggleBoard::ClearToggleTitle()
 		auto p = m_apToggleItem[i];
 		if (!p) continue;
 
-		if (p->GetChild() && ::IsWindow(p->GetChild()->GetSafeHwnd()))
-			p->GetChild()->DestroyWindow();
+		CWnd* pChild = p->GetChild();
+		if (pChild && ::IsWindow(pChild->GetSafeHwnd()))
+		{
+			pChild->DestroyWindow();
+			pChild = nullptr;
+		}
 
 		// 토글 자체 파괴
-		if (::IsWindow(p->GetSafeHwnd()))
-			p->DestroyWindow();
-
-		delete p; // 마지막에 delete
+		p->DestroyWindow();
+		p = nullptr;
 	}
 	m_apToggleItem.RemoveAll();
 }
@@ -298,6 +300,19 @@ void CToggleBoard::OnPaint()
 
 void CToggleBoard::OnLButtonDown(UINT nFlags, CPoint point)
 {
+	/*const int iIconCount = m_aIconRect.GetCount();
+	const int iToggleCount = m_apToggleItem.GetCount();
+	for (int i = 0; i < m_aIconRect.GetCount(); i++)
+	{
+		auto rc = m_aIconRect.GetAt(i);
+		if (rc.PtInRect(point) && (i < iToggleCount))
+		{
+			auto pTitle = m_apToggleItem.GetAt(i);
+			pTitle->SetHideToggle(!pTitle->GetHideToggle());
+			break;
+		}
+	}
+	DeployToggle();*/
 	CWnd::OnLButtonDown(nFlags, point);
 }
 

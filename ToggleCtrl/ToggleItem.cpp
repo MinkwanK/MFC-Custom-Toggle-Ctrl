@@ -23,7 +23,7 @@ CToggleItem::~CToggleItem()
 	}
 }
 
-BOOL CToggleItem::Init(CString sTitle, CFont* pFont, CWnd* pChildDlg, CWnd* pParent, UINT uiToggleUp, UINT uiToggleUpClick, UINT uiToggleDown, UINT uiToggleDownClick)
+BOOL CToggleItem::Init(CString sTitle, CFont* pFont, CWnd* pChildDlg, CWnd* pParent)
 {
 	if (!GetSafeHwnd())
 	{
@@ -38,7 +38,8 @@ BOOL CToggleItem::Init(CString sTitle, CFont* pFont, CWnd* pChildDlg, CWnd* pPar
 		if (!ok) return FALSE;
 	}
 	m_pFont = pFont;
-	InitIcon(uiToggleUp, uiToggleUpClick, uiToggleDown, uiToggleDownClick, 32, 32);
+
+	InitIcon(IDI_ICON_DOWN, IDI_ICON_DOWN, IDI_ICON_UP, IDI_ICON_UP, 16, 16);
 	m_pChild = pChildDlg;
 	m_pParent = (CToggleBoard*)pParent;
 	m_sTitle = sTitle;
@@ -146,8 +147,9 @@ void CToggleItem::OnPaint()
 		DT_LEFT | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS);
 
 
-	const int iCx = 32, iCy = 32;
-	int x = rcText.right + ((rcInfl.Width() - rcText.Width()) - iCx) / 2;
+	const int iCx = 16, iCy = 16;
+	//int x = rcText.right + ((rcInfl.Width() - rcText.Width()) - iCx) / 2;
+	int x = rcInfl.Width() - iCx - iHalf;
 	int y = rcInfl.top + (rcInfl.Height() - iCy) / 2;
 
 	m_rcToggle.SetRect(x, y, x + iCx, y + iCy);
@@ -218,7 +220,6 @@ void CToggleItem::DisplayChild()
 		SWP_NOACTIVATE | SWP_SHOWWINDOW);
 	//순번과 높이를 넣어 n번째 토글 타이틀이 자식을 h 높이만큼 늘렸다고 알린다.
 	m_iChildHeight = rc.Height();
-	m_pChild->Invalidate();
 }
 
 bool CToggleItem::IsChildVisible()

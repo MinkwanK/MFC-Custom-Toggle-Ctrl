@@ -16,6 +16,11 @@ CTogglePanel::CTogglePanel()
 
 CTogglePanel::~CTogglePanel()
 {
+	if (m_pToggleBoard)
+	{
+		m_pToggleBoard->DestroyWindow();
+		m_pToggleBoard = nullptr;
+	}
 }
 
 BOOL CTogglePanel::Init(CWnd* pParent, TOGGLE_ICON_TYPE eIconType)
@@ -53,7 +58,7 @@ BOOL CTogglePanel::Init(CWnd* pParent, TOGGLE_ICON_TYPE eIconType)
 	return TRUE;
 }
 
-void CTogglePanel::AddToggleTitle(CString sTitle, int iToggleHeight, int iChildHeight, CFont* pFont, CWnd* pChildDlg, UINT uiIcon, UINT uiIconInactive, UINT uiToggleUp, UINT uiToggleUpClick, UINT uiToggleDown, UINT uiToggleDownClick)
+void CTogglePanel::AddToggleTitle(CString sTitle, int iToggleHeight, int iChildHeight, CFont* pFont, CWnd* pChildDlg, UINT uiIcon, UINT uiIconInactive)
 {
 	HICON hIcon = AfxGetApp()->LoadIcon(uiIcon);
 	if (!hIcon) return;
@@ -68,7 +73,7 @@ void CTogglePanel::AddToggleTitle(CString sTitle, int iToggleHeight, int iChildH
 
 	if (m_pToggleBoard && ::IsWindow(m_pToggleBoard->GetSafeHwnd()))
 	{
-		m_pToggleBoard->AddToggleTitle(sTitle, iToggleHeight, iChildHeight, pFont, pChildDlg, uiToggleUp, uiToggleUpClick, uiToggleDown, uiToggleDownClick);
+		m_pToggleBoard->AddToggleTitle(sTitle, iToggleHeight, iChildHeight, pFont, pChildDlg);
 	}
 	Invalidate();
 }
@@ -82,8 +87,15 @@ void CTogglePanel::AdjustLayout()
 	constexpr int iMargin = 10;
 	constexpr int iSize = 20;
 
+	int iTitleHeight = 0; // TOGGLE_ICON_TYPE::NONE
+	if (m_eIconType == TOGGLE_ICON_TYPE::USE_16) iTitleHeight = 16;
+	else if (m_eIconType == TOGGLE_ICON_TYPE::USE_24) iTitleHeight = 24;
+	else if (m_eIconType == TOGGLE_ICON_TYPE::USE_32) iTitleHeight = 32;
+	iTitleHeight += 4;// 상단(2), 하단(2)
+
 	CRect rcBoard = rc;
-	rcBoard.top = rc.top + (rc.Height() * (TOGGLE_BOARD_ICON_RATIO * 0.01));
+	//rcBoard.top = rc.top + (rc.Height() * (TOGGLE_BOARD_ICON_RATIO * 0.01));
+	rcBoard.top = rc.top + iTitleHeight;
 	if (m_pToggleBoard && ::IsWindow(m_pToggleBoard->GetSafeHwnd()))
 	{
 		m_pToggleBoard->MoveWindow(rcBoard);
@@ -108,7 +120,13 @@ void CTogglePanel::OnPaint()
 
 	// 아이콘 영역
 	CRect rc, rcIcon; GetClientRect(&rc);
-	const int iIconHeight = (m_eIconType == TOGGLE_ICON_TYPE::NONE) ? 0 : int(rc.Height() * (TOGGLE_BOARD_ICON_RATIO * 0.01));
+
+	int iIconHeight = 0; // TOGGLE_ICON_TYPE::NONE
+	if (m_eIconType == TOGGLE_ICON_TYPE::USE_16) iIconHeight = 16;
+	else if (m_eIconType == TOGGLE_ICON_TYPE::USE_24) iIconHeight = 24;
+	else if (m_eIconType == TOGGLE_ICON_TYPE::USE_32) iIconHeight = 32;
+	iIconHeight += 4;// 상단(2), 하단(2)
+
 	rcIcon = CRect(rc.left, rc.top, rc.right, rc.top + iIconHeight);
 
 	int iIconSize = 0;
@@ -171,7 +189,6 @@ void CTogglePanel::OnSize(UINT nType, int cx, int cy)
 	CWnd::OnSize(nType, cx, cy);
 	AdjustLayout();
 }
-
 
 void CTogglePanel::OnLButtonDown(UINT nFlags, CPoint point)
 {

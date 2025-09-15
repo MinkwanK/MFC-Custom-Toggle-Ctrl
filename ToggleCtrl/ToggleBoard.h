@@ -17,7 +17,7 @@ public:
 	CToggleBoard();
 	virtual ~CToggleBoard();
 	BOOL Init(CWnd* pParent);
-	void AddToggleTitle(CString sTitle, int iToggleHeight, int iChildHeight, CFont* pFont, CWnd* pChildDlg, UINT uiToggleUp, UINT uiToggleUpClick, UINT uiToggleDown, UINT uiToggleDownClick);
+	void AddToggleTitle(CString sTitle, int iToggleHeight, int iChildHeight, CFont* pFont, CWnd* pChildDlg);
 	void ClearToggleTitle();
 	void DeployToggle();
 	CArray<CToggleItem*>& GetToggleItemArray() { return m_apToggleItem; }

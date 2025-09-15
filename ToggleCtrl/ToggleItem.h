@@ -14,7 +14,7 @@ public:
 	CToggleItem();
 	virtual ~CToggleItem();
 
-	BOOL Init(CString sTitle, CFont* pFont, CWnd* pChildDlg, CWnd* pParent, UINT uiToggleUp, UINT uiToggleUpClick, UINT uiToggleDown, UINT uiToggleDownClick);
+	BOOL Init(CString sTitle, CFont* pFont, CWnd* pChildDlg, CWnd* pParent);
 	void InitIcon(UINT uiToggleUp, UINT uiToggleUpSelect, UINT uiToggleDown, UINT uiToggleDownSelect, int iCx, int iCy);
 	void SetBkColor(COLORREF crBack) { m_crBack = crBack; }
 	void SetTextColor(COLORREF crText) { m_crText = crText; }

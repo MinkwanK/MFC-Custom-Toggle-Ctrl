@@ -18,7 +18,7 @@ public:
 	virtual ~CTogglePanel();
 
 	BOOL Init(CWnd* pParent, TOGGLE_ICON_TYPE eIconType = TOGGLE_ICON_TYPE::NONE);
-	void AddToggleTitle(CString sTitle, int iToggleHeight, int iChildHeight, CFont* pFont, CWnd* pChildDlg, UINT uiIcon, UINT uiIconDisable, UINT uiToggleUp, UINT uiToggleUpClick, UINT uiToggleDown, UINT uiToggleDownClick);
+	void AddToggleTitle(CString sTitle, int iToggleHeight, int iChildHeight, CFont* pFont, CWnd* pChildDlg, UINT uiIcon, UINT uiIconDisable);
 	CToggleBoard* GetBoard() { return m_pToggleBoard; }
 protected:
 	DECLARE_MESSAGE_MAP()

@@ -162,23 +162,23 @@ void CMKTestDlg::Init()
 	rc.top = 0;
 	rc.right = 300;
 	rc.bottom = rc.bottom - 5;
-
+	constexpr int iTitleHeight = 24;
 	m_panel.Init(this, TOGGLE_ICON_TYPE::USE_24);
 	CString sValue = _T("TEST 1");
 	m_sample.Create(IDD_DIALOG_SAMPLE, m_panel.GetBoard());
 	m_sample.ShowWindow(SW_HIDE);
 	CFont* pFont = this->GetFont();
-	m_panel.AddToggleTitle(sValue, 60, 60,  pFont, &m_sample, IDI_ICON_UP, IDI_ICON_UP_DISABLE, IDI_ICON_UP, IDI_ICON_UP_CLICK, IDI_ICON_DOWN, IDI_ICON_DOWN_CLICK);
+	m_panel.AddToggleTitle(sValue, iTitleHeight, 60,  pFont, &m_sample, IDI_ICON_UP, IDI_ICON_UP_DISABLE);
 
 	sValue.Format(_T("TEST 2"));
 	m_sample2.Create(IDD_DIALOG_SAMPLE, m_panel.GetBoard());
 	m_sample2.ShowWindow(SW_HIDE);
-	m_panel.AddToggleTitle(sValue, 60, 60, pFont, &m_sample2, IDI_ICON_UP, IDI_ICON_UP_DISABLE, IDI_ICON_UP, IDI_ICON_UP_CLICK, IDI_ICON_DOWN, IDI_ICON_DOWN_CLICK);
+	m_panel.AddToggleTitle(sValue, iTitleHeight, 60, pFont, &m_sample2, IDI_ICON_DOWN, IDI_ICON_DOWN_DISABLE);
 
 	sValue.Format(_T("TEST 3"));
 	m_sample3.Create(IDD_DIALOG_SAMPLE, m_panel.GetBoard());
 	m_sample3.ShowWindow(SW_HIDE);
-	m_panel.AddToggleTitle(sValue, 60, 60, pFont, &m_sample3, IDI_ICON_UP, IDI_ICON_UP_DISABLE, IDI_ICON_UP, IDI_ICON_UP_CLICK, IDI_ICON_DOWN, IDI_ICON_DOWN_CLICK);
+	m_panel.AddToggleTitle(sValue, iTitleHeight, 60, pFont, &m_sample3, IDI_ICON_UP, IDI_ICON_UP_DISABLE);
 
 	m_bInit = TRUE;
 }
