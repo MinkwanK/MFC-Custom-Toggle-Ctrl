@@ -44,4 +44,5 @@ public:
 	void Init();
 	void AdjustLayout();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnDestroy();
 };

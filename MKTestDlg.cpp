@@ -66,6 +66,7 @@ BEGIN_MESSAGE_MAP(CMKTestDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_WM_SIZE()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 
@@ -209,5 +210,16 @@ void CMKTestDlg::OnSize(UINT nType, int cx, int cy)
 	{
 		AdjustLayout();
 		//m_board.DeployToggle();
+	}
+}
+
+
+void CMKTestDlg::OnDestroy()
+{
+	CDialogEx::OnDestroy();
+
+	if (m_panel && m_panel.GetSafeHwnd())
+	{
+		m_panel.DestroyWindow();
 	}
 }

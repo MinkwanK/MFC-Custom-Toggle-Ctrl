@@ -16,11 +16,7 @@ CTogglePanel::CTogglePanel()
 
 CTogglePanel::~CTogglePanel()
 {
-	if (m_pToggleBoard)
-	{
-		m_pToggleBoard->DestroyWindow();
-		m_pToggleBoard = nullptr;
-	}
+
 }
 
 BOOL CTogglePanel::Init(CWnd* pParent, TOGGLE_ICON_TYPE eIconType)
@@ -107,6 +103,7 @@ BEGIN_MESSAGE_MAP(CTogglePanel, CWnd)
 	ON_WM_PAINT()
 	ON_WM_SIZE()
 	ON_WM_LBUTTONDOWN()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 // CTogglePanel 메시지 처리기
@@ -210,4 +207,17 @@ void CTogglePanel::OnLButtonDown(UINT nFlags, CPoint point)
 	m_pToggleBoard->DeployToggle();
 	Invalidate();
 	CWnd::OnLButtonDown(nFlags, point);
+}
+
+
+void CTogglePanel::OnDestroy()
+{
+	CWnd::OnDestroy();
+
+	if (m_pToggleBoard && m_pToggleBoard->GetSafeHwnd())
+	{
+		m_pToggleBoard->DestroyWindow();
+		delete m_pToggleBoard;
+		m_pToggleBoard = nullptr;
+	}
 }

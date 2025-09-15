@@ -20,7 +20,7 @@ CToggleBoard::CToggleBoard()
 
 CToggleBoard::~CToggleBoard()
 {
-	ClearToggleTitle();
+	
 }
 
 BOOL CToggleBoard::Init(CWnd* pParent)
@@ -82,6 +82,7 @@ void CToggleBoard::ClearToggleTitle()
 
 		// 토글 자체 파괴
 		p->DestroyWindow();
+		delete p;
 		p = nullptr;
 	}
 	m_apToggleItem.RemoveAll();
@@ -159,6 +160,7 @@ BEGIN_MESSAGE_MAP(CToggleBoard, CWnd)
 	ON_WM_PAINT()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_MOVE()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 //CToggleTitleBoard 메시지 처리기
@@ -320,4 +322,12 @@ void CToggleBoard::OnLButtonDown(UINT nFlags, CPoint point)
 void CToggleBoard::OnMove(int x, int y)
 {
 	CWnd::OnMove(x, y);
+}
+
+
+void CToggleBoard::OnDestroy()
+{
+	CWnd::OnDestroy();
+
+	ClearToggleTitle();
 }

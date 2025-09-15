@@ -45,6 +45,7 @@ private:
 public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnMove(int x, int y);
+	afx_msg void OnDestroy();
 };
 
 
